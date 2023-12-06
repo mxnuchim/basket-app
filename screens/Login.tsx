@@ -7,6 +7,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
@@ -41,7 +42,7 @@ const Login: React.FC<{
 
   const BottomComponent = () => {
     return (
-      <View className="flex items-center justify-center mt-7">
+      <View className="flex flex-1 items-center justify-center mt-7">
         <Text className="text-dark-blue font-semibold text-center text-base mb-5">
           Or sign up with
         </Text>
@@ -60,6 +61,13 @@ const Login: React.FC<{
             </View>
           ))}
         </View>
+
+        <Pressable className="w-full items-center justify-center mt-auto">
+          <Text className="text-gray-400 text-center text-sm ">
+            Don't have an account?{' '}
+            <Text className="text-dark-blue font-semibold">Sign up</Text>
+          </Text>
+        </Pressable>
       </View>
     );
   };
@@ -69,7 +77,6 @@ const Login: React.FC<{
       contentContainerStyle={styles.container}
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
-      automaticallyAdjustKeyboardInsets
     >
       {/** <============== Top Section ==============> */}
       <View className="flex flex-row items-center gap-3 mb-10">
@@ -81,10 +88,7 @@ const Login: React.FC<{
 
       {/** <============== Inputs ==============> */}
 
-      <KeyboardAvoidingView
-        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        className="w-full mb-10"
-      >
+      <KeyboardAvoidingView behavior={'height'} className="w-full flex-1">
         <Text className="text-dark-blue font-semibold text-base mb-5">
           Login to your account
         </Text>
@@ -103,27 +107,18 @@ const Login: React.FC<{
           secureTextEntry
           keyboardType="default"
         />
+
+        <View className="mb-5">
+          <Button
+            btnText="Sign in"
+            onPress={() => navigation.navigate('Tabs')}
+            disabled={false}
+          />
+        </View>
+
+        {/** <============== Social sign ins ==============> */}
+        <BottomComponent />
       </KeyboardAvoidingView>
-
-      <View className="mb-5">
-        <Button
-          btnText="Sign in"
-          onPress={() => navigation.navigate('Tabs')}
-          disabled={false}
-        />
-      </View>
-
-      {/** <============== Social sign ins ==============> */}
-      <BottomComponent />
-
-      <View className="w-full items-center mt-auto">
-        <Text className="text-gray-400 mb-5 text-center text-sm ">
-          Don't have an account?{' '}
-          <Pressable>
-            <Text className="text-dark-blue font-semibold">Sign up</Text>
-          </Pressable>
-        </Text>
-      </View>
     </KeyboardAwareScrollView>
   );
 };
